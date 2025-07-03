@@ -1,19 +1,20 @@
 use axum::{
     extract::ws::{Message, WebSocket, WebSocketUpgrade},
-    extract::Extension,
     response::IntoResponse,
     routing::get,
     Router,
 };
-use futures::{SinkExt, StreamExt};
+use futures::{StreamExt, SinkExt};
 use std::{
     collections::HashSet,
     net::SocketAddr,
     sync::{Arc, Mutex},
 };
-use tokio::sync::mpsc::{unbounded_channel, UnboundedSender};
-use tower_http::cors::{Any, CorsLayer};
-use yrs::{Doc, Transact};
+use tokio::sync::mpsc::{UnboundedSender, unbounded_channel};
+use tower_http::cors::{CorsLayer};
+use yrs::{Doc};
+
+
 
 type SharedDoc = Arc<Mutex<Doc>>;
 type Clients = Arc<Mutex<HashSet<UnboundedSender<Message>>>>;
